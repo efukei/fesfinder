@@ -44,17 +44,23 @@ const favoriteEvents = computed(() => {
 <template>
   <div class="container">
 
+    <!-- ロゴ -->
+    <div class="logo">
+      <img src="../../img/logo.svg" alt="FesFinder" class="logo" />
+    </div>
+
     <!-- 検索ボックス -->
     <SearchBox />
 
     <!-- 新着イベント -->
     <section>
       <h2 class="section-title">新着イベント</h2>
-      <div class="grid">
+      <div class="horizontal-scroll">
         <EventCard
           v-for="ev in newEvents"
           :key="ev.id"
           :eventData="ev"
+          class="scroll-item"
         />
       </div>
     </section>
@@ -62,11 +68,12 @@ const favoriteEvents = computed(() => {
     <!-- 最近見たイベント -->
     <section v-if="recentEvents.length">
       <h2 class="section-title">最近見たイベント</h2>
-      <div class="grid">
+      <div class="horizontal-scroll">
         <EventCard
           v-for="ev in recentEvents"
           :key="ev.id"
           :eventData="ev"
+          class="scroll-item"
         />
       </div>
     </section>
@@ -74,11 +81,12 @@ const favoriteEvents = computed(() => {
     <!-- お気に入りイベント -->
     <section v-if="favoriteEvents.length">
       <h2 class="section-title">お気に入り</h2>
-      <div class="grid">
+      <div class="horizontal-scroll">
         <EventCard
           v-for="ev in favoriteEvents"
           :key="ev.id"
           :eventData="ev"
+          class="scroll-item"
         />
       </div>
     </section>
@@ -87,6 +95,31 @@ const favoriteEvents = computed(() => {
 </template>
 
 <style scoped>
+.home-wrapper {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 中央寄せコンテナ */
+.center-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ロゴ */
+.logo {
+  max-width: 700px;
+  margin: 50px auto;
+}
+
+/* 検索ボックス幅制御 */
+.search-box {
+  width: 100%;
+  max-width: 520px;
+}
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -94,8 +127,12 @@ const favoriteEvents = computed(() => {
 }
 
 .section-title {
+  color: #fff;
+  background: linear-gradient(to left, #fff, #1E3A5F);
   font-size: 1.4rem;
   margin: 20px 0 10px;
+  border-left: 15px solid #1E3A5F;
+  margin-top: 100px;
 }
 
 .grid {
@@ -103,5 +140,33 @@ const favoriteEvents = computed(() => {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 16px;
   margin-bottom: 40px;
+}
+
+/* 横スクロールコンテナ */
+.horizontal-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 12px; 
+  scroll-behavior: smooth;
+}
+
+/* 各カードの幅を固定 */
+.scroll-item {
+  flex: 0 0 240px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }
 </style>

@@ -5,7 +5,6 @@ import { useEventStore } from '../stores/eventStore'
 import { useFavoriteStore } from '../stores/favoriteStore'
 
 import EventCard from '../components/EventCard.vue'
-import SearchBox from '../components/SearchBox.vue'
 
 const route = useRoute()
 const eventStore = useEventStore()
@@ -15,6 +14,8 @@ const favoriteStore = useFavoriteStore()
 const keyword = computed(() => route.query.keyword || '')
 const genre = computed(() => route.query.genre || '')
 const prefecture = computed(() => route.query.prefecture || '')
+const from = computed(() => route.query.from || '')
+const to = computed(() => route.query.to || '')
 
 // ソート順
 const sortBy = computed({
@@ -50,6 +51,23 @@ const filteredEvents = computed(() => {
       return false
     }
 
+    // 開催日存在チェック
+    if (!event.acf?.event_date) return false
+
+    const eventDate = new Date(event.acf.event_date)
+
+    // 開始日（from）
+    if (from.value) {
+      const fromDate = new Date(from.value)
+      if (eventDate < fromDate) return false
+    }
+
+    // 終了日（to）
+    if (to.value) {
+      const toDate = new Date(to.value)
+      if (eventDate > toDate) return false
+    }
+
     return true
   })
 })
@@ -80,9 +98,6 @@ const sortedEvents = computed(() => {
 
 <template>
   <div class="container">
-
-    <!-- 検索ボックス -->
-    <SearchBox />
 
     <!-- ソートセレクト -->
     <div class="sort">

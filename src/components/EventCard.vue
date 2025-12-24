@@ -40,10 +40,12 @@ defineProps({
   padding: 12px;
 }
 
+
+
 .thumb img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 140px;
+  object-fit: cover;
   border-radius: 6px;
   background: #f5f5f5;
 }

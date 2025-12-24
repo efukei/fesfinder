@@ -3,6 +3,13 @@ import { computed } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import SearchBox from './SearchBox.vue'
 
+defineProps({
+  variant: {
+    type: String,
+    default: 'default'
+  }
+})
+
 const route = useRoute()
 
 // 現在がトップページかどうか判定
@@ -15,7 +22,7 @@ const isHome = computed(() => route.path === '/')
 
       <!-- ロゴ（クリックでトップへ） -->
       <RouterLink to="/" class="logo">
-        FesFinder
+        <img src="../../img/logo.svg" alt="FesFinder" class="header-logo" />
       </RouterLink>
 
       <!-- トップページ以外で検索ボックスを表示 -->
@@ -30,9 +37,12 @@ const isHome = computed(() => route.path === '/')
         </button>
 
         <!-- お問い合わせボタン -->
+        <!-- 
         <RouterLink to="/contact" class="btn contact-btn">
           お問い合わせ
         </RouterLink>
+        -->
+        <a href="https://fesfinder.shop/contact/" class="btn contact-btn" target=”_blank”>お問い合わせ</a>
       </div>
 
     </div>
@@ -50,20 +60,24 @@ const isHome = computed(() => route.path === '/')
 }
 
 .inner {
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding: 0 16px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo {
-  font-size: 22px;
-  font-weight: bold;
-  color: #222;
+  display: flex;
+  align-items: center;
   text-decoration: none;
+}
+
+.header-logo {
+  height: 32px;
+  width: auto;
+  display: block;
 }
 
 .search-area {
@@ -77,18 +91,22 @@ const isHome = computed(() => route.path === '/')
 }
 
 .btn {
-  padding: 8px 14px;
+  padding: 0 20px;
+  height: 45px; /* 後で修正 */
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 6px;
   text-decoration: none;
-  cursor: pointer;
-  border: 1px solid #888;
-  background: #f8f8f8;
-  font-size: 14px;
-  color: #222;
 }
 
 .contact-btn {
-  background: #e8f2ff;
-  border-color: #4d8fe6;
+  color: #fff;
+  background: #1E3A5F;
+}
+
+.login-btn {
+  display: none;
 }
 </style>
